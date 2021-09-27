@@ -1,1 +1,4 @@
 svgwrite
+pandas
+openpyxl
+loguru
