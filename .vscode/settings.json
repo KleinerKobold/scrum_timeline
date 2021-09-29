@@ -1,5 +1,6 @@
 {
     "python.testing.unittestArgs": [
+        "--cov","scrum_timeline", "--cov-report","xml",
         "-v",
         "-s",
         "./test",

@@ -2,3 +2,4 @@ svgwrite
 pandas
 openpyxl
 loguru
+coverage
