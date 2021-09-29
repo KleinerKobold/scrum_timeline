@@ -5,13 +5,7 @@ from loguru import logger
 
 from elements.bonbon import Bonbon
 from elements.builder import Builder
-
-def getBackground(type_name):
-    if (type_name == 'Intervention'):
-        return 'blue'
-    if (type_name == 'Impediment'):
-        return 'orange'
-    raise("unkown type of row")
+from util import getBackground
 
 dfs = read_excel('events.xlsx')
 
