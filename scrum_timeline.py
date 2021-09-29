@@ -35,8 +35,8 @@ def main():
             contains = sprint.contains(start, start if pd.isna(end) else end)
             if contains:
                 list_contents.append(sprint.getContentPoint())
-            logger.debug(f"item {row['Summary']} at {start:%Y-%m-%d} \
-                         {'is' if contains else 'is not'} {sprint}")
+            logger.debug(f"item \"{row['Summary']}\" at {start:%Y-%m-%d} " +
+                         f"{'is' if contains else 'is not'} {sprint}")
         builder.add(
             Bonbon(x_off, (y_off+25*index), 150,
                    row['Summary'], background=getBackground(row['Type'])))
