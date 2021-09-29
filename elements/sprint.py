@@ -1,4 +1,5 @@
 from elements.element import Element
+import datetime
 import svgwrite
 
 class Sprint(Element):
@@ -18,6 +19,14 @@ class Sprint(Element):
         self.start = start
         self.end = end
         Sprint.list_sprints.append(self)
+
+    def __str__(self):
+        return f"Sprint {self.year}-{self.quarter}-{self.iteration}: {self.start:%Y-%m-%d} to {self.end:%Y-%m-%d}"
+    def contains(self,start, end):
+        return (start >= self.start) & (end <= self.end)
+
+    def getContentPoint(self):
+        return (self.x,self.y)
 
     def draw(self, dwg) -> None:
         dwg.add(dwg.line(start=(self.x,self.y),end=(self.x,self.y+1080)))
