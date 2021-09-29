@@ -2,7 +2,7 @@ from elements.element import Element
 
 
 class Bonbon(Element):
-    def __init__(self, x: int, y: int, width: int, 
+    def __init__(self, x: int, y: int, width: int,
                  title: str, background='blue', foreground='white') -> None:
         super().__init__()
         self.x = x
@@ -24,4 +24,3 @@ class Bonbon(Element):
                          insert=(self.x, self.y+3),
                          fill=self.foreground,
                          font_size='12px', font_family="Arial"))
-    
