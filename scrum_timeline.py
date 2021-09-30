@@ -35,11 +35,13 @@ def main():
             contains = sprint.contains(start, start if pd.isna(end) else end)
             if contains:
                 list_contents.append(sprint.getContentPoint())
+                item = Bonbon(x_off, (y_off+25*index), 150,
+                              row['Summary'],
+                              background=getBackground(row['Type']))
+                sprint.addItem(item)
+
             logger.debug(f"item \"{row['Summary']}\" at {start:%Y-%m-%d} " +
                          f"{'is' if contains else 'is not'} {sprint}")
-        builder.add(
-            Bonbon(x_off, (y_off+25*index), 150,
-                   row['Summary'], background=getBackground(row['Type'])))
     builder.draw()
 
     print(dwg.tostring())

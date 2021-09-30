@@ -18,6 +18,7 @@ class Sprint(Element):
         self.iteration = iteration
         self.start = start
         self.end = end
+        self.elements = list()
         Sprint.list_sprints.append(self)
 
     def __str__(self):
@@ -30,6 +31,10 @@ class Sprint(Element):
     def getContentPoint(self):
         return (self.x, self.y)
 
+    def addItem(self, element):
+        element.setContentPoint(self.x+15, self.y+50+25*len(self.elements))
+        self.elements.append(element)
+
     def draw(self, dwg) -> None:
         dwg.add(dwg.line(start=(self.x, self.y),
                          end=(self.x, self.y+1080)))
@@ -38,3 +43,5 @@ class Sprint(Element):
         dwg.add(dwg.text(text=f"Sprint {self.iteration}",
                          insert=(self.x + 10, self.y+20),
                          fill='black', font_size='12px', font_family="Arial"))
+        for element in self.elements:
+            element.draw(dwg)
