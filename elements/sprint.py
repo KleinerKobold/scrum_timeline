@@ -40,7 +40,7 @@ class Sprint(Element):
                          end=(self.x, self.y+1080)))
         dwg.add(dwg.line(start=(self.x+self.width, self.y),
                          end=(self.x+self.width, self.y+1080)))
-        dwg.add(dwg.text(text=f"Sprint {self.iteration}",
+        dwg.add(dwg.text(text=f"Sprint {self.year}-Q{self.quarter}-{self.iteration}",
                          insert=(self.x + 10, self.y+20),
                          fill='black', font_size='12px', font_family="Arial"))
         for element in self.elements:
