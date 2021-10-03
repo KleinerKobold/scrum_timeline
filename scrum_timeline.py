@@ -32,6 +32,7 @@ def main():
     dwg.save()
     logger.debug("Done")
 
+
 def add_an_item(index, row):
     x_off = 20
     y_off = 50
@@ -44,12 +45,12 @@ def add_an_item(index, row):
         if contains:
             list_contents.append(sprint.getContentPoint())
             item = Bonbon(x_off, (y_off+25*index), 150,
-                              row['Summary'],
-                              background=getBackground(row['Type']))
+                          row['Summary'],
+                          background=getBackground(row['Type']))
             sprint.addItem(item)
 
         logger.debug(f"item \"{row['Summary']}\" at {start:%Y-%m-%d} " +
-                         f"{'is' if contains else 'is not'} {sprint}")
+                     f"{'is' if contains else 'is not'} {sprint}")
 
 
 if __name__ == '__main__':
