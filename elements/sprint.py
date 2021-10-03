@@ -7,6 +7,10 @@ class Sprint(Element):
     # about year and quarter on the canvas
     list_sprints = list()
 
+    X_OFF_SET = 15
+    Y_OFF_SET = 50
+    Y_ROW_SIZE = 25
+
     def __init__(self, x: int, y: int, width: int, year, quarter,
                  iteration: int, start, end) -> None:
         super().__init__()
@@ -32,7 +36,10 @@ class Sprint(Element):
         return (self.x, self.y)
 
     def addItem(self, element):
-        element.setContentPoint(self.x+15, self.y+50+25*len(self.elements))
+        
+        x = self.x + Sprint.X_OFF_SET
+        y = self.y + Sprint.Y_OFF_SET + Sprint.Y_ROW_SIZE * len(self.elements)
+        element.setContentPoint(x, y)
         self.elements.append(element)
 
     def draw(self, dwg) -> None:
