@@ -17,15 +17,10 @@ def main():
 
     builder = Builder(dwg)
     for index, row in dfs[1].iterrows():
-        print(row['Year'], row['Quarter'], row['Iteration'],
-              row['Start'], row['End'])
-        sprint = Sprint(200*index, 0, 200,
-                        row['Year'], row['Quarter'], row['Iteration'],
-                        row['Start'], row['End'])
-        builder.add(sprint)
+        build_sprint(builder, index, row)
 
     for index, row in dfs[0].iterrows():
-        add_an_item(index, row)
+        build_an_item(index, row)
     builder.draw()
 
     print(dwg.tostring())
@@ -33,7 +28,16 @@ def main():
     logger.debug("Done")
 
 
-def add_an_item(index, row):
+def build_sprint(builder, index, row):
+    print(row['Year'], row['Quarter'], row['Iteration'],
+          row['Start'], row['End'])
+    sprint = Sprint(200*index, 0, 200,
+                    row['Year'], row['Quarter'], row['Iteration'],
+                    row['Start'], row['End'])
+    builder.add(sprint)
+
+
+def build_an_item(index, row):
     x_off = 20
     y_off = 50
     print(row['Type'], row['Start'], row['Summary'])
@@ -43,14 +47,16 @@ def add_an_item(index, row):
         end = row['End']
         contains = sprint.contains(start, start if pd.isna(end) else end)
         if contains:
-            list_contents.append(sprint.getContentPoint())
-            item = Bonbon(x_off, (y_off+25*index), 150,
-                          row['Summary'],
-                          background=getBackground(row['Type']))
-            sprint.addItem(item)
+            list_contents.append(sprint)
 
         logger.debug(f"item \"{row['Summary']}\" at {start:%Y-%m-%d} " +
                      f"{'is' if contains else 'is not'} {sprint}")
+    my_range = len(list_contents)
+    if my_range > 0:
+        item = Bonbon(x_off, (y_off+25*index), len(list_contents)*(150+(50 if my_range > 1 else 0)-50),
+                      my_range, row['Summary'],
+                      background=getBackground(row['Type']), )
+        list_contents[0].addItem(item)
 
 
 if __name__ == '__main__':

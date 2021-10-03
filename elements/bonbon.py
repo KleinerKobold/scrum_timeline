@@ -2,9 +2,9 @@ from elements.element import Element
 
 
 class Bonbon(Element):
-    def __init__(self, x: int, y: int, width: int,
+    def __init__(self, x: int, y: int, width: int, range: int,
                  title: str, background='blue', foreground='white') -> None:
-        super().__init__()
+        super().__init__(range)
         self.x = x
         self.y = y
         self.width = width

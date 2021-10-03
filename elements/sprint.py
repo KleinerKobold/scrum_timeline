@@ -1,4 +1,7 @@
 from elements.element import Element
+from loguru import logger
+
+from elements.empty_space import Empty_Space
 
 
 class Sprint(Element):
@@ -13,7 +16,7 @@ class Sprint(Element):
 
     def __init__(self, x: int, y: int, width: int, year, quarter,
                  iteration: int, start, end) -> None:
-        super().__init__()
+        super().__init__(range=None)
         self.x = x
         self.y = y
         self.width = width
@@ -40,11 +43,31 @@ class Sprint(Element):
         return (self.x, self.y)
 
     def addItem(self, element):
-
         x = self.x + Sprint.X_OFF_SET
         y = self.y + Sprint.Y_OFF_SET + Sprint.Y_ROW_SIZE * len(self.elements)
-        element.setContentPoint(x, y)
-        self.elements.append(element)
+
+        if not self.hasRange(len(self.elements) + 1):
+            element.setContentPoint(x, y)
+            self.elements.append(element)
+        else:
+            space = Empty_Space(x, y, self.width)
+            self.elements.append(space)
+            self.addItem(element)
+
+    def getRange(self, row: int):
+        if len(self.elements)-1 < row:
+            return 0
+        return self.elements[row].get_range()
+
+    def hasRange(self, row: int) -> int:
+        """ return True if there is something in range else false"""
+        own_sprint = Sprint.list_sprints.index(self)
+        if own_sprint == 0:
+            return False
+        for index, sprint in enumerate(Sprint.list_sprints):
+            if sprint.getRange(row) >= own_sprint:
+                return True
+        return False
 
     def draw(self, dwg) -> None:
         sprint_name = f"Sprint {self.year}-Q{self.quarter}-{self.iteration}"
