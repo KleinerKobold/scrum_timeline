@@ -25,28 +25,31 @@ def main():
         builder.add(sprint)
 
     for index, row in dfs[0].iterrows():
-        x_off = 20
-        y_off = 50
-        print(row['Type'], row['Start'], row['Summary'])
-        list_contents = list()
-        for sprint in Sprint.list_sprints:
-            start = row['Start']
-            end = row['End']
-            contains = sprint.contains(start, start if pd.isna(end) else end)
-            if contains:
-                list_contents.append(sprint.getContentPoint())
-                item = Bonbon(x_off, (y_off+25*index), 150,
-                              row['Summary'],
-                              background=getBackground(row['Type']))
-                sprint.addItem(item)
-
-            logger.debug(f"item \"{row['Summary']}\" at {start:%Y-%m-%d} " +
-                         f"{'is' if contains else 'is not'} {sprint}")
+        add_an_item(index, row)
     builder.draw()
 
     print(dwg.tostring())
     dwg.save()
     logger.debug("Done")
+
+def add_an_item(index, row):
+    x_off = 20
+    y_off = 50
+    print(row['Type'], row['Start'], row['Summary'])
+    list_contents = list()
+    for sprint in Sprint.list_sprints:
+        start = row['Start']
+        end = row['End']
+        contains = sprint.contains(start, start if pd.isna(end) else end)
+        if contains:
+            list_contents.append(sprint.getContentPoint())
+            item = Bonbon(x_off, (y_off+25*index), 150,
+                              row['Summary'],
+                              background=getBackground(row['Type']))
+            sprint.addItem(item)
+
+        logger.debug(f"item \"{row['Summary']}\" at {start:%Y-%m-%d} " +
+                         f"{'is' if contains else 'is not'} {sprint}")
 
 
 if __name__ == '__main__':
