@@ -30,13 +30,17 @@ class Sprint(Element):
                f"{self.start:%Y-%m-%d} to {self.end:%Y-%m-%d}"
 
     def contains(self, start, end):
-        return (start >= self.start) & (end <= self.end)
+        complete_in_sprint = (start >= self.start) & (end <= self.end)
+        start_in_sprint = (start >= self.start) & (start <= self.end)
+        end_in_sprint = (end >= self.start) & (end <= self.end)
+        interrim = (start < self.start) & (end > self.end)
+        return complete_in_sprint | start_in_sprint | end_in_sprint | interrim
 
     def getContentPoint(self):
         return (self.x, self.y)
 
     def addItem(self, element):
-        
+
         x = self.x + Sprint.X_OFF_SET
         y = self.y + Sprint.Y_OFF_SET + Sprint.Y_ROW_SIZE * len(self.elements)
         element.setContentPoint(x, y)
